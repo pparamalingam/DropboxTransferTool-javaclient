@@ -11,7 +11,9 @@ import java.util.Locale;
 public class DropboxAuthenticator {
 
     private DbxClient client_;
+    private String accessToken_;
 
+    //Console input constructor
     public DropboxAuthenticator(final String APP_KEY, final String APP_SECRET) throws IOException, DbxException {
 
         DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
@@ -34,9 +36,33 @@ public class DropboxAuthenticator {
         System.out.println("Linked account: " + client_.getAccountInfo().displayName);
     }
 
-    public DbxClient getClient() {
+    //Web consumed constructor
+    public DropboxAuthenticator(final String APP_KEY, final String APP_SECRET, final String TOKEN) throws IOException, DbxException {
+
+        accessToken_ = TOKEN;
+
+        DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
+
+        DbxRequestConfig config = new DbxRequestConfig(
+                "JavaTutorial/1.0", Locale.getDefault().toString());
+
+        client_ = new DbxClient(config, accessToken_);
+        System.out.println("Linked account: " + client_.getAccountInfo().displayName);
+    }
+
+    public DbxClient getClient_() {
         return client_;
     }
 
+    public String getAccessToken_() {
+        return accessToken_;
+    }
 
+    public void setClient_(DbxClient client_) {
+        this.client_ = client_;
+    }
+
+    public void setAccessToken_(String accessToken_) {
+        this.accessToken_ = accessToken_;
+    }
 }
