@@ -9,7 +9,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException, DbxException {
 
-	DropboxAuthenticator auth = new DropboxAuthenticator("YOUR_KEY","YOUR_SECRET");
+	    DropboxAuthenticator auth = new DropboxAuthenticator("io6bkt0n9uq2opz","4lgybl1aclmjcq8");
+        DropboxDirectoryList list = new DropboxDirectoryList(auth);
 
     }
 }
