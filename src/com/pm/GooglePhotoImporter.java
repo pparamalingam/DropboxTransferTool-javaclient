@@ -12,5 +12,10 @@ import com.google.gdata.data.photos.*;
  */
 public class GooglePhotoImporter {
 
+    String nextUrl = "http://www.example.com/RetrieveToken.jsp";
+    String scope = "http://www.google.com/calendar/feeds/";
+    boolean secure = false;  // set secure=true to request secure AuthSub tokens
+    boolean session = true;
+    //String authSubUrl = AuthSubUtil.getRequestUrl(nextUrl, scope, secure, session);
 
 }
