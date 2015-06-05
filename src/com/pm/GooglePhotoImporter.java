@@ -15,13 +15,17 @@ import com.google.gdata.util.ServiceException;
 import org.apache.commons.io.FileUtils;
 
 import com.google.gdata.client.photos.PicasawebService;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,14 +43,18 @@ public class GooglePhotoImporter {
 
     public GooglePhotoImporter(String AccessToken, ArrayList<URL> DbUrl) throws MalformedURLException, IOException, ServiceException, GeneralSecurityException{
 
+        String uniqueID = UUID.randomUUID().toString();
+        String dir = "tmp-" + uniqueID + "/";
         ArrayList<File> file = new ArrayList<File>();
         int count = 0;
         for (URL url : DbUrl){
             try {
-                File f = new File("test.jpg");
+                String baseName = FilenameUtils.getBaseName(url.toString());
+                String extension = FilenameUtils.getExtension(url.toString());
+                File f = new File(dir + baseName + "." + extension);
+
                 FileUtils.copyURLToFile(url, f);
                 file.add(f);
-                //f.delete();
             }
             catch(Exception exception) {
                 log.log(Level.SEVERE, exception.getMessage());
@@ -66,7 +74,7 @@ public class GooglePhotoImporter {
         myPhoto.setClient("DropboxTransferTool");
 
         try {
-            MediaFileSource myMedia = new MediaFileSource(/*file.get(0)*/ new File("a.jpg"), "image/jpg");
+            MediaFileSource myMedia = new MediaFileSource(file.get(0), "image/jpg");
             myPhoto.setMediaSource(myMedia);
         }
         catch (Exception exception){
@@ -75,6 +83,7 @@ public class GooglePhotoImporter {
         URL albumPostUrl = new URL("https://picasaweb.google.com/data/feed/api/user/default");
         PhotoEntry returnedPhoto = service.insert(albumPostUrl, myPhoto);
         credential.refreshToken();
+        //FileUtils.deleteDirectory(new File (dir));
 
 
     }

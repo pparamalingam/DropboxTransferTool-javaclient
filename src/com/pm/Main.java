@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException, DbxException, ServiceException, GeneralSecurityException {
 
         ArrayList<URL> url = new ArrayList<URL>();
-        URL x = new URL("https://www.dropbox.com/s/7uki3b1sayel74q/Boston%20City%20Flow.jpg");
+        URL x = new URL("https://dl.dropboxusercontent.com/1/view/l2xikbd6rp22ezz/Camera%20Uploads/IMG_20150605_040845.jpg");
         url.add(x);
 	    //DropboxAuthenticator auth = new DropboxAuthenticator("io6bkt0n9uq2opz","4lgybl1aclmjcq8");
         //DropboxDirectoryList list = new DropboxDirectoryList(auth);
