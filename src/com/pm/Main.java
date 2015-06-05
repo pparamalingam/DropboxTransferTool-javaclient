@@ -14,10 +14,12 @@ public class Main {
     public static void main(String[] args) throws IOException, DbxException, ServiceException, GeneralSecurityException {
 
         ArrayList<URL> url = new ArrayList<URL>();
-        URL x = new URL("https://dl.dropboxusercontent.com/1/view/l2xikbd6rp22ezz/Camera%20Uploads/IMG_20150605_040845.jpg");
+        URL x = new URL("https://dl.dropboxusercontent.com/1/view/qanugni706m5xlj/Photos/Sample%20Album/2013-09-22-14.41.50-1.jpg");
+        URL y = new URL("https://dl.dropboxusercontent.com/1/view/1ihoh7jed2f7qcp/Photos/Sample%20Album/Pensive%20Parakeet.jpg");
+        URL z = new URL("https://dl.dropboxusercontent.com/1/view/h6ieah7r2k07fdi/Photos/Sample%20Album/Sony-Xperia-Z3-Compact-Review-074-manual-mode-20MP-samples.JPG.jpg");
         url.add(x);
-	    //DropboxAuthenticator auth = new DropboxAuthenticator("io6bkt0n9uq2opz","4lgybl1aclmjcq8");
-        //DropboxDirectoryList list = new DropboxDirectoryList(auth);
+        url.add(y);
+        url.add(z);
         GooglePhotoImporter test = new GooglePhotoImporter("TOKEN", url); //test
     }
 }

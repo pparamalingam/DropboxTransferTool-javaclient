@@ -21,8 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -46,7 +44,9 @@ public class GooglePhotoImporter {
         String uniqueID = UUID.randomUUID().toString();
         String dir = "tmp-" + uniqueID + "/";
         ArrayList<File> file = new ArrayList<File>();
-        int count = 0;
+
+        System.out.println("\n Dropbox Photo Downloader \n");
+
         for (URL url : DbUrl){
             try {
                 String baseName = FilenameUtils.getBaseName(url.toString());
@@ -55,35 +55,43 @@ public class GooglePhotoImporter {
 
                 FileUtils.copyURLToFile(url, f);
                 file.add(f);
+                System.out.println("Dropbox Photo Downloaded: " + f.getName());
             }
             catch(Exception exception) {
                 log.log(Level.SEVERE, exception.getMessage());
             }
         }
+
+        System.out.println("\n Google Photo Uploader \n");
+
         createTokenResponse(AccessToken);
-
         PicasawebService service = new PicasawebService("DropboxTransferTool");
-
         HTTP_TRANSPORT =  new NetHttpTransport();
         JSON_FACTORY = new JacksonFactory();
         Credential credential = createCredentialWithAccessTokenOnly(HTTP_TRANSPORT, JSON_FACTORY, tokenResponse_);
         service.setOAuth2Credentials(credential);
 
-        PhotoEntry myPhoto = new PhotoEntry();
-        myPhoto.setTitle(new PlainTextConstruct(file.get(0).getName()));
-        myPhoto.setClient("DropboxTransferTool");
+        for (File photo : file){
+            PhotoEntry myPhoto = new PhotoEntry();
+            myPhoto.setTitle(new PlainTextConstruct(photo.getName()));
+            myPhoto.setClient("DropboxTransferTool");
 
-        try {
-            MediaFileSource myMedia = new MediaFileSource(file.get(0), "image/jpg");
-            myPhoto.setMediaSource(myMedia);
+            try {
+                MediaFileSource myMedia = new MediaFileSource(photo, "image/jpg");
+                myPhoto.setMediaSource(myMedia);
+            }
+            catch (Exception exception){
+                log.log(Level.SEVERE, exception.getMessage());
+            }
+            URL albumPostUrl = new URL("https://picasaweb.google.com/data/feed/api/user/default");
+            service.insert(albumPostUrl, myPhoto);
+            System.out.println("Goolge Photo Uploaded: " + photo.getName());
+            credential.refreshToken();
         }
-        catch (Exception exception){
-            log.log(Level.SEVERE, exception.getMessage());
-        }
-        URL albumPostUrl = new URL("https://picasaweb.google.com/data/feed/api/user/default");
-        PhotoEntry returnedPhoto = service.insert(albumPostUrl, myPhoto);
-        credential.refreshToken();
-        //FileUtils.deleteDirectory(new File (dir));
+
+        System.out.println("\n Purging Downloaded Assets \n");
+        FileUtils.deleteDirectory(new File (dir));
+        System.out.println("\n Successful Transfer. Thank You. \n");
 
 
     }
