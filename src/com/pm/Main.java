@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, DbxException, ServiceException, GeneralSecurityException {
+    public static void main(String[] args) throws IOException, DbxException, ServiceException, GeneralSecurityException, Exception {
 
         ArrayList<URL> url = new ArrayList<URL>();
         URL x = new URL("https://dl.dropboxusercontent.com/1/view/qanugni706m5xlj/Photos/Sample%20Album/2013-09-22-14.41.50-1.jpg");
@@ -20,6 +20,7 @@ public class Main {
         url.add(x);
         url.add(y);
         url.add(z);
-        GooglePhotoImporter test = new GooglePhotoImporter("TOKEN", url); //test
+        DbJsonConsumer urls = new DbJsonConsumer("https://api.myjson.com/bins/1mz8s");
+        GooglePhotoImporter test = new GooglePhotoImporter("ya29.iQGVtMcvXRxpT8VOEERW7loeBVgES4B2BZQwZUOGO4RN-CmLv9dqnmljKP1ynX1NdlfwwkM0TP3dCw", urls.getDbUrls_()); //test
     }
 }

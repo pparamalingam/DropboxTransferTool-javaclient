@@ -45,7 +45,7 @@ public class GooglePhotoImporter {
         String dir = "tmp-" + uniqueID + "/";
         ArrayList<File> file = new ArrayList<File>();
 
-        System.out.println("\n Dropbox Photo Downloader \n");
+        System.out.println("\nDropbox Photo Downloader \n");
 
         for (URL url : DbUrl){
             try {
@@ -55,14 +55,14 @@ public class GooglePhotoImporter {
 
                 FileUtils.copyURLToFile(url, f);
                 file.add(f);
-                System.out.println("Dropbox Photo Downloaded: " + f.getName());
+                System.out.println(" Dropbox Photo Downloaded: " + f.getName());
             }
             catch(Exception exception) {
                 log.log(Level.SEVERE, exception.getMessage());
             }
         }
 
-        System.out.println("\n Google Photo Uploader \n");
+        System.out.println("\nGoogle Photo Uploader \n");
 
         createTokenResponse(AccessToken);
         PicasawebService service = new PicasawebService("DropboxTransferTool");
@@ -85,13 +85,13 @@ public class GooglePhotoImporter {
             }
             URL albumPostUrl = new URL("https://picasaweb.google.com/data/feed/api/user/default");
             service.insert(albumPostUrl, myPhoto);
-            System.out.println("Goolge Photo Uploaded: " + photo.getName());
+            System.out.println(" Goolge Photo Uploaded: " + photo.getName());
             credential.refreshToken();
         }
 
-        System.out.println("\n Purging Downloaded Assets \n");
+        System.out.println("\nPurging Downloaded Assets \n");
         FileUtils.deleteDirectory(new File (dir));
-        System.out.println("\n Successful Transfer. Thank You. \n");
+        System.out.println("\nSuccessful Transfer. Thank You. \n");
 
 
     }
