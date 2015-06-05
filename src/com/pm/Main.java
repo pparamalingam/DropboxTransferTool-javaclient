@@ -18,6 +18,6 @@ public class Main {
         url.add(x);
 	    //DropboxAuthenticator auth = new DropboxAuthenticator("io6bkt0n9uq2opz","4lgybl1aclmjcq8");
         //DropboxDirectoryList list = new DropboxDirectoryList(auth);
-        GooglePhotoImporter test = new GooglePhotoImporter("TOKEN", url);
+        GooglePhotoImporter test = new GooglePhotoImporter("TOKEN", url); //test
     }
 }
