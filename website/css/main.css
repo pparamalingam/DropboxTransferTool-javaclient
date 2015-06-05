@@ -1,5 +1,15 @@
+ *{
+ 	    font-family: 'Roboto', sans-serif;font-weight: 400;
+ }
  body {
-    padding-top: 40px;
+    padding-top: 60px;
+    background-color:#eeeeee
+  }
+  h1{
+  	font-size:30px;
+  }
+  h3{
+  	font-size: 22px;
   }
 .navbar-default {
   background-color: #2196f3;
